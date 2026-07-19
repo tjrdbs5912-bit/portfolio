@@ -100,7 +100,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: 'works-admin',
+    id: 'doda-works',
     title: 'Doda Works',
     company: '라임프렌즈',
     stack: ['React', 'TypeScript', 'MUI', 'TanStack Query'],
@@ -141,14 +141,14 @@ export const projects: Project[] = [
     highlights: [
       '인증이 필요한 SSE를 EventSourcePolyfill로 구성해 사용자·인턴 알림을 폴링 없이 실시간 갱신',
       '회원·인턴·기업관리자 역할별 진입 조건(이력서·성향진단·인턴 상태)을 게이트해 온보딩·활동 플로우를 일관되게 분기',
-      '이력서·성향진단·수료증 PDF를 pdfmake로 생성하고, 웹뷰/브라우저 환경에 맞춰 전달 방식을 분리',
+      '탭 종료·새로고침 시 fetch가 취소돼 강의 진도가 유실되는 문제를, sendBeacon으로 시청 기록을 남기도록 처리',
     ],
     troubleshooting: [
       {
         problem:
-          '알림을 폴링하면 지연·불필요한 요청이 생기고, 인증이 필요한 알림 스트림은 브라우저에서 연결 자체가 실패함',
+          '실시간 알림 스트림 구축 시, 인증이 필요한 API 구조에서 브라우저 네이티브 EventSource 연결이 실패하는 현상 발생',
         cause:
-          '알림 API가 Bearer 인증인데, 네이티브 EventSource는 Authorization 헤더를 실을 수 없음',
+          '알림 API는 Bearer 토큰 인증이 필수적이었으나, 브라우저 표준 EventSource API는 HTTP Authorization 헤더를 직접 설정할 수 없는 제약이 있었음',
         solution:
           'EventSourcePolyfill로 토큰을 헤더에 실어 SSE를 연결하고, 사용자·인턴 알림 채널을 분리한 뒤 목록·읽음·페이지 변경(재연결)을 Notification Context에서 일괄 관리',
       },
